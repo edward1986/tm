@@ -3,6 +3,7 @@ package com.androidtutz.anushka.tmdbclient.view;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.res.Configuration;
+import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.androidtutz.anushka.tmdbclient.R;
 import com.androidtutz.anushka.tmdbclient.adapter.MovieAdapter;
+import com.androidtutz.anushka.tmdbclient.databinding.ActivityMainBinding;
 import com.androidtutz.anushka.tmdbclient.model.Movie;
 import com.androidtutz.anushka.tmdbclient.model.MovieDBResponse;
 import com.androidtutz.anushka.tmdbclient.service.MovieDataService;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private MovieAdapter movieAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private MainActivityViewModel mainActivityViewModel;
+    private ActivityMainBinding activityMainBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +44,14 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("TMDB Popular Movies Today");
 
+        activityMainBinding= DataBindingUtil.setContentView(this,R.layout.activity_main);
+
         mainActivityViewModel= ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
         getPopularMovies();
 
 
-        swipeRefreshLayout = findViewById(R.id.swipe_layout);
+        swipeRefreshLayout = activityMainBinding.swipeLayout;
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -73,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showOnRecyclerView() {
 
-        recyclerView = (RecyclerView) findViewById(R.id.rvMovies);
+        recyclerView = activityMainBinding.rvMovies;
         movieAdapter = new MovieAdapter(this, movies);
 
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
