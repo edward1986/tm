@@ -48,10 +48,8 @@ public class Movie extends BaseObservable implements Parcelable
     @BindingAdapter({"posterPath"})
     public static void loadImage(ImageView imageView,String imageURL){
 
-        String imagePath="https://image.tmdb.org/t/p/w500"+imageURL;
-
         Glide.with(imageView.getContext())
-                .load(imagePath)
+                .load(imageURL)
                 .placeholder(R.drawable.loading)
                 .into(imageView);
     }

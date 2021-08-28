@@ -47,6 +47,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
 
         Movie movie=movieArrayList.get(position);
+        String imagePath="https://image.tmdb.org/t/p/w500"+movie.getPosterPath();
+        movie.setPosterPath(imagePath);
+
         holder.movieListItemBinding.setMovie(movie);
 
     }
