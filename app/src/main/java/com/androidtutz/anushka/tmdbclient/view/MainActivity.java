@@ -2,6 +2,7 @@ package com.androidtutz.anushka.tmdbclient.view;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.arch.paging.PagedList;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
@@ -30,7 +31,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<Movie> movies;
+    private PagedList<Movie> movies;
     private RecyclerView recyclerView;
     private MovieAdapter movieAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -65,21 +66,28 @@ public class MainActivity extends AppCompatActivity {
 
     public void getPopularMovies() {
 
-        mainActivityViewModel.getAllMovies().observe(this, new Observer<List<Movie>>() {
-            @Override
-            public void onChanged(@Nullable List<Movie> moviesFromLiveData) {
-                movies = (ArrayList<Movie>) moviesFromLiveData;
-                showOnRecyclerView();
-            }
-        });
+//        mainActivityViewModel.getAllMovies().observe(this, new Observer<List<Movie>>() {
+//            @Override
+//            public void onChanged(@Nullable List<Movie> moviesFromLiveData) {
+//                movies = (ArrayList<Movie>) moviesFromLiveData;
+//                showOnRecyclerView();
+//            }
+//        });
 
-
+         mainActivityViewModel.getMoviesPagedList().observe(this, new Observer<PagedList<Movie>>() {
+             @Override
+             public void onChanged(@Nullable PagedList<Movie> moviesFromLiveData) {
+                  movies=moviesFromLiveData;
+                  showOnRecyclerView();
+             }
+         });
     }
 
     private void showOnRecyclerView() {
 
         recyclerView = activityMainBinding.rvMovies;
-        movieAdapter = new MovieAdapter(this, movies);
+        movieAdapter = new MovieAdapter(this);
+        movieAdapter.submitList(movies);
 
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 

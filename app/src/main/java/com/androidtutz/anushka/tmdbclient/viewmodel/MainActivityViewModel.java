@@ -25,6 +25,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     private Executor executor;
     private LiveData<PagedList<Movie>> moviesPagedList;
 
+
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
         movieRepository=new MovieRepository(application);

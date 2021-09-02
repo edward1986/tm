@@ -284,7 +284,7 @@ public class Movie extends BaseObservable implements Parcelable
 
         @Override
         public boolean areContentsTheSame(Movie oldItem, Movie newItem) {
-           return true;
+            return true;
         }
     };
 
